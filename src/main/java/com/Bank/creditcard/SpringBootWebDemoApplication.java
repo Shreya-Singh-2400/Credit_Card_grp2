@@ -3,6 +3,7 @@ import com.Bank.creditcard.banking.dao.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import java.util.logging.Logger;
 
@@ -13,18 +14,20 @@ import java.util.logging.Logger;
 
 @SpringBootApplication
 public class SpringBootWebDemoApplication {
-
 	Logger logger = Logger.getLogger(SpringBootWebDemoApplication.class.getSimpleName());
 
-	public static void main(String[] args) {
-		SpringApplication.run(SpringBootWebDemoApplication.class, args);
-	}
 	@Autowired
 	private CustomerRepository repository;
 
+	public static void main(String[] args)
+	{
+		ConfigurableApplicationContext context =
+				SpringApplication.run(SpringBootWebDemoApplication.class, args);
+		System.out.println("application started :)");
+	}
+
 	@Bean
 	public void init() {
-		logger.info("");
 
 
 	}

@@ -1,5 +1,4 @@
 package com.Bank.creditcard.banking.service;
-
 import com.Bank.creditcard.banking.dao.CustomerRepository;
 import com.Bank.creditcard.banking.dto.CustomerPerPageResponse;
 import com.Bank.creditcard.banking.entity.Customer;
@@ -18,11 +17,11 @@ public class CustomerService{
 
     @Autowired
     private CustomerRepository repository;
-    public Customer insertCustomer(Customer customer) throws RecordExistsException {
-        if(repository.existsById((long) customer.getCustomer_id()))
-            throw new RecordExistsException("Employee with "+customer.getCustomer_id()+"already exists");
+        public Customer insertCustomer(Customer customer) throws RecordExistsException {
+        if(repository.existsById((String) customer.get_id()))
+            throw new RecordExistsException("Employee with "+customer.get_id()+"already exists");
         long count = this.repository.count();
-        customer.setCustomer_id((int) (count+1));
+        customer.set_id(String.valueOf(count+1));
         Customer savedCustomer = repository.save(customer);
         System.out.printf("There are now %d employees\n", repository.count());
         return  savedCustomer;
@@ -32,15 +31,15 @@ public class CustomerService{
     {
         return this.repository.findAll();
     }
-    public Customer getCustomerById(long empid) throws RecordNotFoundException {
-        return repository.findById(empid)
-                .orElseThrow(() -> new RecordNotFoundException("employee with " + empid + " does not exist"));
+    public List<Customer> getCustomerByCustomerId(long _id)
+    {
+        return repository.findAllByCustomerId(_id);
     }
 
     public void updateCustomer( Customer custToUpdate) throws RecordNotFoundException {
-        System.out.println("UPDATE "+custToUpdate.getCustomer_id());
-        if(! repository.existsById((long) custToUpdate.getCustomer_id()))
-            throw new RecordNotFoundException("employee with "+custToUpdate.getCustomer_id()+" does not exist");
+        System.out.println("UPDATE "+custToUpdate.get_id());
+        if(! repository.existsById((String) custToUpdate.get_id()))
+            throw new RecordNotFoundException("customer with "+custToUpdate.getCustomerId()+" does not exist");
         repository.save(custToUpdate);
     }
     // Get all customer by job.
@@ -64,10 +63,10 @@ public class CustomerService{
         response.setTotalPages(totalPages);
         return response;
     }
-    public void deleteCustomer(long customer_id) throws RecordNotFoundException {
+    public void deleteCustomer(String _id) throws RecordNotFoundException {
 
-        if(repository.existsById(customer_id))
-            throw new RecordNotFoundException("employee with "+customer_id+" does not exist");
-        repository.deleteById(customer_id);
+        if(repository.existsById(_id))
+            throw new RecordNotFoundException("employee with "+_id+" does not exist");
+        repository.deleteById(_id);
     }
 }

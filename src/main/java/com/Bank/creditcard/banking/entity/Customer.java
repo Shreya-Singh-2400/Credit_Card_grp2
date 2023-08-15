@@ -1,41 +1,57 @@
 package com.Bank.creditcard.banking.entity;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.util.Date;
-@Document
+@Document(collection = "Customer")
 public class Customer {
     @Id
-    private long customer_id;
+    private String _id;
+    @Field("customer_id")
+    private long customerId;
+
+    @Field("first")
     private String firstName;
+
+    @Field("last")
     private String lastName;
     private String gender;
     private String job;
-    private Date dob;
+    private String dob;
 
-    public Customer(int customer_id, String firstname, String lastName, String job) {
-        this.customer_id = customer_id;
+    public Customer(){
+    }
+
+    public Customer(int customerId, String firstname, String lastName, String job) {
+        this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.job = job;
     }
+
     public Customer(String firstName, String lastName, String job) {
-
         this.firstName = firstName;
         this.lastName = lastName;
         this.job = job;
     }
 
 
-    public int getCustomer_id() {
-        return (int) customer_id;
+    public String get_id() {
+        return _id;
     }
 
-    public void setCustomer_id(int customer_id) {
-        this.customer_id = customer_id;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
+    public long getCustomerId() {
+        return customerId;
+    }
 
+    public void setCustomerId(long customerId) {
+        this.customerId = customerId;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -85,13 +101,13 @@ public class Customer {
 
 
 
-    public Date getDob() {
+    public String getDob() {
         return dob;
     }
 
 
 
-    public void setDob(Date dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 }

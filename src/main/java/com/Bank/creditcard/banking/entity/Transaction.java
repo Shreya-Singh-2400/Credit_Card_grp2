@@ -1,9 +1,8 @@
 package com.Bank.creditcard.banking.entity;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-@Document
+@Document(collection="Transaction")
 public class Transaction {
     @Id
     private int id;
@@ -35,13 +34,9 @@ public class Transaction {
         this.id = id;
     }
 
-
-
     public String getTrans_date_trans_time() {
         return trans_date_trans_time;
     }
-
-
 
     public void setTrans_date_trans_time(String trans_date_trans_time) {
         this.trans_date_trans_time = trans_date_trans_time;
@@ -202,10 +197,5 @@ public class Transaction {
     public void setDob(String dob) {
         this.dob = dob;
     }
-
-
-
-
-
 
 }
