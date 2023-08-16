@@ -23,7 +23,7 @@ public class SpringBootWebDemoApplication {
 	{
 		ConfigurableApplicationContext context =
 				SpringApplication.run(SpringBootWebDemoApplication.class, args);
-		System.out.println("application started :)");
+		System.out.println("application started");
 	}
 
 	@Bean
