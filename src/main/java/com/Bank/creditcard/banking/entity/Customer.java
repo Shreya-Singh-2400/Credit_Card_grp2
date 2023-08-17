@@ -4,10 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
+
 import java.time.LocalDate;
 
 @Document(collection = "Customer")
@@ -18,29 +15,24 @@ public class Customer {
     @Field("customer_id")
     private long customerId;
 
-    @NotEmpty(message = "First name is mandatory")
-    @Size(min = 2, max = 50, message = "First name should be between 2 and 50 characters")
+
     @Field("first")
     private String firstName;
 
-    @NotEmpty(message = "Last name is mandatory")
-    @Size(min = 2, max = 50, message = "Last name should be between 2 and 50 characters")
+
     @Field("last")
     private String lastName;
 
-    @NotEmpty(message = "Gender is mandatory")
+    
     private String gender;
 
-    @NotEmpty(message = "Job is mandatory")
+
     private String job;
 
-    @Past(message = "DOB must be a past date")
     private LocalDate dob;  // Assuming you want to use a more appropriate type than String
 
     public Customer(){
     }
-
-    // ... (rest of your class)
 
 }
 
