@@ -17,9 +17,9 @@ public class CustomerService{
 
     @Autowired
     private CustomerRepository repository;
-        public Customer insertCustomer(Customer customer) throws RecordExistsException {
-        if(repository.existsById((String) customer.get_id()))
-            throw new RecordExistsException("Employee with "+customer.get_id()+"already exists");
+    public Customer insertCustomer(Customer customer) throws RecordExistsException {
+        if(repository.existsByCustomerId(customer.getCustomerId()))
+            throw new RecordExistsException(" customer with "+customer.get_id()+"already exists");
         long count = this.repository.count();
         customer.set_id(String.valueOf(count+1));
         Customer savedCustomer = repository.save(customer);

@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 //@Controller // If using @Controller then @ResponseBody is used to create REST API
-@Controller
+
 @RestController
 @RequestMapping("/customers")
 @Tag(name="CUSTOMER-CONTROLLER")
@@ -70,6 +70,7 @@ public class CreditCardController {
     @PostMapping
     public ResponseEntity<Object> addCustomer(@RequestBody Customer customer)
     {
+        System.out.println(customer);
         try {
             Customer customer1 = this.customerService.insertCustomer(customer);
             return ResponseEntity.status(HttpStatus.CREATED).body(customer1);

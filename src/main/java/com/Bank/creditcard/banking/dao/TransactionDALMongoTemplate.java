@@ -44,7 +44,7 @@ public class TransactionDALMongoTemplate implements TransactionDAL {
         List<Transaction> result = groupResults.getMappedResults();
         return result;
     }
-
+//charts.js, plotly.js, d3.js
     @Override
     public List<Transaction> getAmountsForCategory(String category) {
         GroupOperation groupByCategorySumAmounts = group("category").sum("amt").as("total_amount");

@@ -1,35 +1,46 @@
-function getItems() {
-	//const url = "http://jcdemoopenshift1.conygre.com:8081/items";
-	const url = "/customers";
+let ele=document.getElementById('cust')
+function getCustomer() {
+	//const url = "http://jcdemoopenshift1.conygre.com:8081/customer";
+	alert('fetching customers')
+	const url = "http://localhost:8080/customers";
 	fetch(url)//promise object to return data from Rest API
-		.then(function(response) { return response.json(); }) //resolve , data from resolve is passed to next then
+		.then(function(response) {console.log(response); return response.json(); }) //resolve , data from resolve is passed to next then
 		.then(function(Customers) {
-			if (items.length > 0) {
+		console.log(Customers);
+			if (Customers.length > 0) {
 				var temp = "";
-				items.forEach(function (itemData) {
+				Customers.forEach(function (Customer) {
 					temp += "<tr>";
-					temp += "<td>" + itemData.id + "</td>";
-					temp += "<td>" + itemData.name + "</td>";
-					temp += "<td>" + itemData.artist_group + "</td>";
-					temp += "<td>" + itemData.genre + "</td>";
-					temp += "<td> <button onclick='populateInputs(" + itemData.id +
-						")'>Edit</button>&nbsp;<button onClick='deleteItem(" +
-						itemData.id + ")'>Delete</button ></td></tr>"
+					temp += "<td>" + Customer.customerId + "</td>";
+					temp += "<td>" + Customer.firstName + "</td>";
+					temp += "<td>" + Customer.lastName + "</td>";
+					temp += "<td>" + Customer.gender + "</td>";
+					temp += "<td>" + Customer.job + "</td>";
+					temp += "<td>" + Customer.dob + "</td>";
+					temp += "<td> <button onclick='populateInputs(" + Customer.customerId +
+						")'>Edit</button>&nbsp;<button onClick='deleteCustomer(" +
+						Customer.customerId + ")'>Delete</button ></td></tr>"
+
 				});
-				document.getElementById('tbodyitems').innerHTML = temp;
+				ele.innerHTML += temp;
+                console.log(ele);
 			}
 		});
 }
 
-function addItem() {
+function addCustomer() {
+alert('clicked')
 	const data = {
-		id: 0,
-		name: document.getElementById('name').value,
-		artist_group: document.getElementById('artist_group').value,
-		genre: document.getElementById('genre').value
+		customerId:document.getElementById('customerId').value,
+		name: document.getElementById('firstName').value,
+		lastname: document.getElementById('lastName').value,
+		gender: document.getElementById('gender').value,
+		job: document.getElementById('job').value,
+		dob: document.getElementById('dob').value
 	};
-	//const url = "http://jcdemoopenshift1.conygre.com:8081/items";
-	const url = "/items";
+	console.log(data);
+	//const url = "http://jcdemoopenshift1.conygre.com:8081/Customer";
+	const url = "http://localhost:8080/customers";
 	fetch(url, {
 		method: 'POST',
 		headers: {
@@ -37,65 +48,73 @@ function addItem() {
 		},
 		body: JSON.stringify(data)
 	}).then(function(){
-		document.getElementById('name').value = "";
-		document.getElementById('artist_group').value = "";
-		document.getElementById('genre').value = "";
-		getItems();
+		document.getElementById('firstName').value = "";
+		document.getElementById('lastName').value = "";
+		document.getElementById('gender').value = "";
+		document.getElementById('job').value = "";
+		document.getElementById('dob').value = "";
+		getCustomer();
 	});
 }
 
-function populateInputs(id) {
-	//const url = `http://jcdemoopenshift1.conygre.com:8081/items/${id}`;
-	const url = `/items/${id}`;
+function populateInputs(_id) {
+	//const url = `http://jcdemoopenshift1.conygre.com:8081/Customer/${id}`;
+	const url = `/Customer/${_id}`;
 	fetch(url)
 		.then(function(response){ return response.json(); })
-		.then(function(item){
-			document.getElementById('id').innerText = item.id;
-			document.getElementById('name').value = item.name;
-			document.getElementById('artist_group').value = item.artist_group;
-			document.getElementById('genre').value = item.genre;
+		.then(function(Customer){
+			document.getElementById('customer_id').innerText = Customer.customer_id;
+			document.getElementById('firstname').value = Customer.firstname;
+			document.getElementById('lastname').value = Customer.firstname;
+			document.getElementById('gender').value = Customer.gender;
+			document.getElementById('job').value = Customer.job;
+			document.getElementById('dob').value = Customer.dob;
 			document.getElementById('save').disabled = false;
 			document.getElementById('add').disabled = true;
 		});
 }
 
-function saveItem() {
-	const item = {
-		id: document.getElementById('id').innerText,
-		name: document.getElementById('name').value,
-		artist_group: document.getElementById('artist_group').value,
-		genre: document.getElementById('genre').value
+function saveCustomer() {
+	const Customer = {
+		id: document.getElementById('customer_id').innerText,
+		firstname: document.getElementById('firstname').value,
+		lastname: document.getElementById('lastname').value,
+		gender: document.getElementById('gender').value,
+		job: document.getElementById('job').value,
+		dob: document.getElementById('dob').value
 	};
-	const id = document.getElementById('id').innerText;
-	const url = `/items/${id}`;
-	//const url = `http://jcdemoopenshift1.conygre.com:8081/items/${id}`;
+	const id = document.getElementById('_id').innerText;
+	const url = `/Customer/${_id}`;
+	//const url = `http://jcdemoopenshift1.conygre.com:8081/Customer/${id}`;
 	fetch(url, {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify(item)
+		body: JSON.stringify(Customer)
 	}).then( function(){
-		document.getElementById('id').innerText = "";
-		document.getElementById('name').value = "";
-		document.getElementById('artist_group').value = "";
-		document.getElementById('genre').value = "";
+		document.getElementById('customer_id').innerText = "";
+		document.getElementById('firstname').value = "";
+		document.getElementById('lastname').value = "";
+		document.getElementById('gender').value = "";
+		document.getElementById('job').value = "";
+		document.getElementById('dob').value = "";
 		document.getElementById('save').disabled = true;
 		document.getElementById('add').disabled = false;
-		getItems();
+		getCustomer();
 	});
 }
 
-function deleteItem(id) {
-	const choice = confirm(`Do you want to delete the music item with id ${id}?`);
-	const url = `/items/${id}`;
-    //const url = `http://jcdemoopenshift1.conygre.com:8081/items/${id}`;
+function deleteCustomer(customer_id) {
+	const choice = confirm(`Do you want to delete the customer with id ${_id}?`);
+	const url = `/Customer/${_id}`;
+    //const url = `http://jcdemoopenshift1.conygre.com:8081/Customer/${id}`;
 	if (choice == true) {
 		fetch(url, {
 			method: 'DELETE'
 		}).then(function(response){
-			alert(`The music item with id ${id} has been deleted`);
-			getItems();
+			alert(`The customer with id ${_id} has been deleted`);
+			getCustomer();
 		});
 	}
 }

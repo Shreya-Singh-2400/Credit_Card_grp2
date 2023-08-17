@@ -9,6 +9,6 @@ import java.util.List;
 public interface CustomerRepository extends MongoRepository<Customer, String> {
     List<Customer> findAllByCustomerId(long customerId);
     List<Customer> findCustomersByJob(String job);
-
+public boolean existsByCustomerId(long id);
 
 }
