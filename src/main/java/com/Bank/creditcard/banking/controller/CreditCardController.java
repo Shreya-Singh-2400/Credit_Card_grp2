@@ -6,6 +6,7 @@ import com.Bank.creditcard.banking.exceptions.RecordExistsException;
 import com.Bank.creditcard.banking.exceptions.RecordNotFoundException;
 import com.Bank.creditcard.banking.service.CustomerService;
 import com.Bank.creditcard.banking.utility.StatusMessages;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -113,3 +114,6 @@ public class CreditCardController {
     @GetMapping("/")
     public String defaultPage(){return "redirect:/index.html";}
 }
+
+
+
